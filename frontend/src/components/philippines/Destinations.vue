@@ -45,7 +45,7 @@
                 </v-row>
                 <v-row>
                     <v-col class="d-flex justify-center">
-                        <v-btn color="primary">See More</v-btn>
+                        <v-btn color="primary" @click="viewDestinations">See More</v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -87,6 +87,11 @@ export default {
                     name: 'Kawasan Falls, Cebu'
                 }
             ],
+        }
+    },
+    methods: {
+        viewDestinations() {
+            this.$router.push(`/philippines/destinations`).catch(()=>{});
         }
     }
 }

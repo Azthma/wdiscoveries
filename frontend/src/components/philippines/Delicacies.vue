@@ -45,7 +45,7 @@
                 </v-row>
                 <v-row>
                     <v-col class="d-flex justify-center">
-                        <v-btn color="primary">See More</v-btn>
+                        <v-btn color="primary" @click="viewDelicacies">See More</v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -87,6 +87,11 @@ export default {
                     name: 'Sinigang'
                 }
             ],
+        }
+    },
+    methods: {
+        viewDelicacies() {
+            this.$router.push(`/philippines/delicacies`).catch(()=>{});
         }
     }
 }
