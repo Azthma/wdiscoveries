@@ -41,7 +41,7 @@
                     </v-row>
                     <v-row>
                         <v-col class="d-flex justify-center">
-                            <v-btn color="primary" @click="seeMoreDelicacies">See More</v-btn>
+                            <v-btn color="primary" @click="seeMoreDestinations">See More</v-btn>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -67,7 +67,7 @@
                     </v-row>
                     <v-row>
                         <v-col class="d-flex justify-center">
-                            <v-btn color="primary" @click="seeMoreDelicacies">See More</v-btn>
+                            <v-btn color="primary" @click="seeMoreActivities">See More</v-btn>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -188,6 +188,12 @@ export default {
         }
     },
     methods: {
+        seeMoreDestinations() {
+            this.$router.push(`/philippines/${this.$route.params.city}/destinations/${this.$route.params.id}`).catch(()=>{});
+        },
+        seeMoreActivities() {
+            this.$router.push(`/philippines/${this.$route.params.city}/things-to-do/${this.$route.params.id}`).catch(()=>{});
+        },
         seeMoreDelicacies() {
             this.$router.push(`/philippines/${this.$route.params.city}/delicacies/${this.$route.params.id}`).catch(()=>{});
         }

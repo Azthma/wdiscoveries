@@ -26,7 +26,7 @@ class BaseRepository {
         if (!!fields && fields) {
             options.attributes = fields;
         }
-        return this.model.findAll(options);
+        return this.model.findAndCountAll(options);
     }
 
     updateById(id = 0, item) {

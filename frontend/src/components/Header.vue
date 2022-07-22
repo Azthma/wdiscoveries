@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar dark>
-            <a @click="home"><v-toolbar-title class="mx-2" style="color:white;">PROJECT</v-toolbar-title></a>
+            <a @click="home"><v-toolbar-title class="mx-2" style="color:white;"><div class="font-weight-bold" style="color:#d4af37">AZMA<span class="font-weight-light" style="color:white">Discoveries</span></div></v-toolbar-title></a>
             <v-spacer></v-spacer>
             <v-menu transition="slide-y-transition" offset-y>
                 <template v-slot:activator="{ on }">

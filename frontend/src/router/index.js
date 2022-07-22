@@ -12,7 +12,12 @@ const Activities = () => import("../pages/philippines/Activities.vue");
 const Delicacies = () => import("../pages/philippines/Delicacies.vue");
 //cities
 const City = () => import("../pages/philippines/city/City.vue");
+const CityDestinations = () => import("../pages/philippines/city/Destinations.vue");
+const CityActivities = () => import("../pages/philippines/city/Activities.vue");
 const CityDelicacies = () => import("../pages/philippines/city/Delicacies.vue");
+
+//admin
+const AdminDashboard = () => import("../pages/admin/AdminDashboard");
 
 Vue.use(VueRouter);
 
@@ -53,10 +58,26 @@ const routes = [
         component: City
     },
     {
+        path: "/philippines/:city/destinations/:id",
+        name: "CityDestinations",
+        component: CityDestinations
+    },
+    {
+        path: "/philippines/:city/things-to-do/:id",
+        name: "CityActivities",
+        component: CityActivities
+    },
+    {
         path: "/philippines/:city/delicacies/:id",
         name: "CityDelicacies",
         component: CityDelicacies
     },
+
+    {
+        path: "/admin",
+        name: "AdminDashboard",
+        component: AdminDashboard
+    }
 ];
 
 const router = new VueRouter({
