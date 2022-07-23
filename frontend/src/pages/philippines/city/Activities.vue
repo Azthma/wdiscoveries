@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row class="d-flex justify-center py-16">
-            <v-col cols="7">
+            <v-col cols="11" lg="7">
                 <v-img
                     :src="`https://picsum.photos/500/300?image=${($route.params.id - 1) * 5 + 10}`"
                     height="300"
@@ -15,7 +15,7 @@
                     </div>
                 </v-card>
                 <v-card flat color="transparent" class="mt-16">
-                    <div class="font-weight-bold text-h4 mb-3">Things to do in {{$route.params.city}}</div>
+                    <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Things to do in {{$route.params.city}}</div>
                     <v-row>
                         <v-col
                             v-for="(item, index) in activities"

@@ -8,6 +8,7 @@ import VueCookies from "vue-cookies-reactive"
 import store from "./store"
 import { serverApi } from "./api"
 import authentication from "./plugins/auth";
+import device from "vue-device-detector"
 
 Vue.config.productionTip = false;
 
@@ -15,6 +16,7 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueCookies);
 Vue.use(authentication);
+Vue.use(device)
 
 Vue.prototype.$serverApi = serverApi;
 

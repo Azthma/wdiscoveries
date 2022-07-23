@@ -28,7 +28,27 @@ const destinationStorage = multer.diskStorage({
   },
 });
 
+const delicacyStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/resources/delicacy");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
+
+const activityStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/resources/activity");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
+
 const uploadCityFile = multer({ storage: cityStorage, fileFilter: imageFilter });
 const uploadDestinationFile = multer({ storage: destinationStorage, fileFilter: imageFilter });
+const uploadDelicacyFile = multer({ storage: delicacyStorage, fileFilter: imageFilter });
+const uploadActivityFile = multer({ storage: activityStorage, fileFilter: imageFilter });
 
-module.exports = { uploadCityFile, uploadDestinationFile };
+module.exports = { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile };

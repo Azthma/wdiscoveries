@@ -1,8 +1,12 @@
 <template>
     <div>
-        <v-card flat tile dark height="400">
-
-        </v-card>
+        <v-row>
+            <v-col>
+                <v-img :src="require('../assets/rice-terraces.jpg')" height="400" class="d-flex align-center">
+                    <div :class="!$device.mobile ? 'text-center text-h2 font-weight-bold' : 'text-center text-h3 font-weight-bold'" style="color:white;">Philippines</div>
+                </v-img>
+            </v-col>
+        </v-row>
         <Cities />
         <Destinations />
         <Activities />

@@ -13,7 +13,7 @@
             <v-data-table
                 :headers="headers"
                 :items="cities"
-                :items-per-page="5"
+                :items-per-page="-1"
                 hide-default-footer
                 class="elevation-0"
             >
@@ -74,7 +74,7 @@ export default {
             ],
             cities: [],
             name: "",
-            country: "",
+            country: "Philippines",
             info: "",
             currentFile: undefined,
         }
@@ -98,13 +98,16 @@ export default {
             const res = await this.addCity(formData);
             if (res.created) {
                 this.name = "";
-                this.country = "";
                 this.info = "";
+                this.$refs.cityPicture.removeImage();
                 this.dialog = false;
+                this.getAll();
             }
         },
         async getAll() {
-            const res = await this.getCities();
+            const res = await this.getCities({
+                pageSize: 100,
+            });
             this.cities = res.rows;
         },
         editItem(item) {

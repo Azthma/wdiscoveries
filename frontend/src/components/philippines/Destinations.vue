@@ -1,19 +1,19 @@
 <template>
     <div>
         <v-row class="d-flex justify-center py-16">
-            <v-col cols="8">
-                <div class="font-weight-bold text-h4 mb-3">Places to visit in the Philippines</div>
-                <v-row>
+            <v-col cols="11" md="10" lg="7">
+                <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Places to visit in the Philippines</div>
+                <v-row class="d-flex justify-start">
                     <v-col
                         v-for="item in destinations"
                         :key="item.id"
                         class="d-flex child-flex"
-                        cols="3"
+                        cols="4"
+                        lg="3"
                     >
                         <v-hover v-slot="{ hover }">
                             <v-img
-                                :src="`https://picsum.photos/500/300?image=${(item.id - 1) * 5 + 10}`"
-                                :lazy-src="`https://picsum.photos/10/6?image=${(item.id - 1) * 5 + 10}`"
+                                :src="require(`../../../../backend/resources/destinations/${item.image}`)"
                                 aspect-ratio="1"
                                 class="grey lighten-2"
                             >
@@ -33,7 +33,9 @@
                                     <v-expand-transition>
                                         <div
                                             v-if="hover"
-                                            class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h5 white--text pa-6 text-center"
+                                            :class="!$device.mobile 
+                                                ? 'd-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h5 white--text pa-6 text-center' 
+                                                : 'd-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-caption white--text pa-6 text-center'"
                                         >
                                             {{item.name}}
                                         </div>
@@ -54,42 +56,24 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
-            destinations: [
-                {
-                    id: 1,
-                    name: 'Calle Crisologo, Vigan'
-                },
-                {
-                    id: 2,
-                    name: 'Nacpan Beach, El Nido'
-                },
-                {
-                    id: 3,
-                    name: 'Tubbataha Reef, Palawan'
-                },
-                {
-                    id: 4,
-                    name: 'Mayon Volcano, Albay, Bicol'
-                },
-                {
-                    id: 5,
-                    name: 'Intramuros and Fort Santiago, Manila'
-                },
-                {
-                    id: 6,
-                    name: 'Taal Volcano and Lake, Tagaytay, and Batangas'
-                },
-                {
-                    id: 7,
-                    name: 'Kawasan Falls, Cebu'
-                }
-            ],
+            destinations: [],
         }
     },
+    mounted() {
+        this.getAll();
+    },
     methods: {
+        ...mapActions("admin", ["getDestinations"]),
+        async getAll() {
+            const res = await this.getDestinations({
+                pageSize: !this.$device.mobile ? 8 : 9,
+            });
+            this.destinations = res.rows;
+        },
         viewDestinations() {
             this.$router.push(`/philippines/destinations`).catch(()=>{});
         }

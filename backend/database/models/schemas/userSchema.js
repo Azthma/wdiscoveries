@@ -7,7 +7,8 @@ const userSchema = {
     autoIncrement: true
   },
   type: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'user'
   },
   name: {
     type: Sequelize.STRING

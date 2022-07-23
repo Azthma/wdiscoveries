@@ -13,7 +13,7 @@
             <v-data-table
                 :headers="headers"
                 :items="destinations"
-                :items-per-page="5"
+                :items-per-page="-1"
                 hide-default-footer
                 class="elevation-0"
             >
@@ -99,13 +99,17 @@ export default {
                 this.name = "";
                 this.city_id = "";
                 this.info = "";
+                this.$refs.pictureInput.removeImage();
                 this.dialog = false;
+                this.getAll();
             }
         },
         async getAll() {
-            const res = await this.getDestinations();
+            const res = await this.getDestinations({
+                page: 1,
+                pageSize: 100,
+            });
             this.destinations = res.rows;
-            console.log(this.destinations[3])
         },
         editItem(item) {
             console.log(item.id)

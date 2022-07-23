@@ -1,19 +1,19 @@
 <template>
     <div>
         <v-row class="d-flex justify-center py-16">
-            <v-col cols="8">
-                <div class="font-weight-bold text-h4 mb-3">Things to do in the Philippines</div>
-                <v-row>
+            <v-col cols="11" md="10" lg="7">
+                <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Things to do in the Philippines</div>
+                <v-row class="d-flex justify-start">
                     <v-col
                         v-for="item in activities"
                         :key="item.id"
                         class="d-flex child-flex"
-                        cols="3"
+                        cols="4"
+                        lg="3"
                     >
                         <v-hover v-slot="{ hover }">
                             <v-img
-                                :src="`https://picsum.photos/500/300?image=${(item.id - 1) * 5 + 10}`"
-                                :lazy-src="`https://picsum.photos/10/6?image=${(item.id - 1) * 5 + 10}`"
+                                :src="require(`../../../../backend/resources/activity/${item.image}`)"
                                 aspect-ratio="1"
                                 class="grey lighten-2"
                             >
@@ -33,7 +33,9 @@
                                     <v-expand-transition>
                                         <div
                                             v-if="hover"
-                                            class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h5 white--text pa-6 text-center"
+                                            :class="!$device.mobile 
+                                                ? 'd-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h5 white--text pa-6 text-center' 
+                                                : 'd-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-caption white--text pa-6 text-center'"
                                         >
                                             {{item.name}}
                                         </div>
@@ -54,42 +56,24 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
-            activities: [
-                {
-                    id: 1,
-                    name: 'Sightseeing'
-                },
-                {
-                    id: 2,
-                    name: 'Visit Museums'
-                },
-                {
-                    id: 3,
-                    name: 'Go on a Pilgrimage Tour'
-                },
-                {
-                    id: 4,
-                    name: 'Wakeboarding'
-                },
-                {
-                    id: 5,
-                    name: 'Explore Nature at National Parks'
-                },
-                {
-                    id: 6,
-                    name: 'River Tubing'
-                },
-                {
-                    id: 7,
-                    name: 'Boat Tours or River Cruises'
-                }
-            ],
+            activities: [],
         }
     },
+    mounted() {
+        this.getAll();
+    },
     methods: {
+        ...mapActions("admin", ["getActivities"]),
+        async getAll() {
+            const res = await this.getActivities({
+                pageSize: !this.$device.mobile ? 8 : 9,
+            });
+            this.activities = res.rows;
+        },
         viewActivities() {
             this.$router.push(`/philippines/things-to-do`).catch(()=>{});
         }

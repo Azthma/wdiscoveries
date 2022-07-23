@@ -1,12 +1,14 @@
 const user = require('../app/controllers/userController');
 const city = require('../app/controllers/cityController');
 const destination = require('../app/controllers/destinationsController');
+const delicacy = require('../app/controllers/delicacyController');
+const activity = require('../app/controllers/activityController');
 var expressJwt = require('express-jwt');
 const cors = require('cors');
 const dotenv = require("dotenv");
 dotenv.config();
 const { userRegistrationRules } = require('../app/middleware/rules');
-const { uploadCityFile, uploadDestinationFile } = require("../app/middleware/upload");
+const { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile } = require("../app/middleware/upload");
 
 module.exports = function(app) {
 
@@ -22,11 +24,21 @@ module.exports = function(app) {
 
     // city
     app.post('/city', uploadCityFile.single('file'), city.addCity);
-    app.get('/cities', city.getAllCities)
+    app.get('/cities', city.getAllCities);
+    app.get('/city/:id', city.getCity);
 
-    // destinations
+    // destination
     app.post('/destination', uploadDestinationFile.single('file'), destination.addDestination);
-    app.get('/destinations', destination.getAllDestinations)
+    app.get('/destinations', destination.getAllDestinations);
+    app.get('/city/destinations/:city_id', destination.getAllDestinationsByCity);
+
+    // delicacy
+    app.post('/delicacy', uploadDelicacyFile.single('file'), delicacy.addDelicacy);
+    app.get('/delicacies', delicacy.getAllDelicacies);
+
+    // activity
+    app.post('/activity', uploadActivityFile.single('file'), activity.addActivity);
+    app.get('/activities', activity.getAllActivities);
 
     app.use(
       expressJwt({

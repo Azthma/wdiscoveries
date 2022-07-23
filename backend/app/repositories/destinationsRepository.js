@@ -10,17 +10,43 @@ class destinationsRepository extends BaseRepository{
         super(model)
     }
 
-    findAllDestinations(fields, include) {
-        const options = {};
-        if (!!fields && fields) {
-            options.attributes = fields;
-        }
+    findAllDestinations({ page, pageSize, search }, include) {
+        pageSize = !!pageSize ? pageSize : 10;
+        page = !!page ? page : 1;
+        const offset = (page - 1) * parseInt(pageSize) || 0;
+        const limit = parseInt(pageSize) || 10;
+
+        const options = {
+            where: {
+                [Op.and]: [
+                    {
+                      name :{
+                        [Op.like]: `%${search || ""}%`
+                      }
+                    }, {
+                      id :{
+                        [Op.like]: `%${search || ""}%`
+                      }
+                    }
+                ],
+            },
+            offset: offset,
+            limit: limit
+        };
+
         if (!!include && Array.isArray(include)) {
           options.include = include;
         }
         options.include = [
           { model: city, as: 'city' },
         ];
+        return this.model.findAndCountAll(options);
+    }
+
+    findByCity(city_id = 0) {
+        const options = {
+            where: { city_id },
+        };
         return this.model.findAndCountAll(options);
     }
 

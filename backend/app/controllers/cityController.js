@@ -27,8 +27,23 @@ class cityController {
 
     async getAllCities(req, res, next) {
         try {
-            const cities = await cityRepository.findAll();
+            const cities = await cityRepository.findAllCities(req.query);
             return res.json(cities);
+        } catch (error) {
+            return res.json(error);
+        }
+    }
+
+    async getCity(req, res, next) {
+        try {
+            const city = await cityRepository.findById(req.params.id);
+            if (!!city) {
+                return res.json(city);
+            } else {
+                return res.json({
+                    message: "no data found"
+                })
+            }
         } catch (error) {
             return res.json(error);
         }

@@ -3,18 +3,28 @@ const actions = {
 	//city
 	async addCity({}, payload) {
 		try {
-		  const data = await this._vm.$serverApi.post('/city', payload);
-		  return data.data;
+			const data = await this._vm.$serverApi.post('/city', payload);
+			return data.data;
 		} catch (error) {
-		  return error;
+		  	return error;
 		}
 	},
-	async getCities({}, payload) {
+	async getCities({commit}, payload) {
 		try {
-		  const data = await this._vm.$serverApi.get('/cities', payload);
-		  return data.data;
+			const page = payload && (payload.page || 1);
+			const search = payload && payload.search ? payload.search : "";
+			const pageSize = payload && payload.pageSize || 10;
+			const data = await this._vm.$serverApi.get('/cities', {
+				params: {
+					page,
+					pageSize,
+					search,
+				},
+			});
+			commit('SET_CITY_COUNT', data.data.count);
+			return data.data;
 		} catch (error) {
-		  return error;
+		  	return error;
 		}
 	},
 	//destination
@@ -26,12 +36,76 @@ const actions = {
 		  return error;
 		}
 	},
-	async getDestinations({}, payload) {
+	async getDestinations({commit}, payload) {
 		try {
-		  const data = await this._vm.$serverApi.get('/destinations', payload);
+			const page = payload && (payload.page || 1);
+			const search = payload && payload.search ? payload.search : "";
+			const pageSize = payload && payload.pageSize || 10;
+			const data = await this._vm.$serverApi.get('/destinations', {
+				params: {
+					page,
+					pageSize,
+					search,
+				},
+			});
+			commit('SET_DESTINATION_COUNT', data.data.count);
+			return data.data;
+		} catch (error) {
+		  	return error;
+		}
+	},
+	//delicacy
+	async addDelicacy({}, payload) {
+		try {
+		  const data = await this._vm.$serverApi.post('/delicacy', payload);
 		  return data.data;
 		} catch (error) {
 		  return error;
+		}
+	},
+	async getDelicacies({commit}, payload) {
+		try {
+			const page = payload && (payload.page || 1);
+			const search = payload && payload.search ? payload.search : "";
+			const pageSize = payload && payload.pageSize || 10;
+			const data = await this._vm.$serverApi.get('/delicacies', {
+				params: {
+					page,
+					pageSize,
+					search,
+				},
+			});
+			commit("SET_DELICACIES_COUNT", data.data.count);
+			return data.data;
+		} catch (error) {
+		  	return error;
+		}
+	},
+	//activity
+	async addActivity({}, payload) {
+		try {
+		  const data = await this._vm.$serverApi.post('/activity', payload);
+		  return data.data;
+		} catch (error) {
+		  return error;
+		}
+	},
+	async getActivities({commit}, payload) {
+		try {
+			const page = payload && (payload.page || 1);
+			const search = payload && payload.search ? payload.search : "";
+			const pageSize = payload && payload.pageSize || 10;
+			const data = await this._vm.$serverApi.get('/activities', {
+				params: {
+					page,
+					pageSize,
+					search,
+				},
+			});
+			commit("SET_ACTIVITIES_COUNT", data.data.count);
+			return data.data;
+		} catch (error) {
+		  	return error;
 		}
 	},
 };
