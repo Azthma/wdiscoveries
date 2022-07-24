@@ -63,6 +63,7 @@ class userController {
                             birthdate: user.birthdate,
                             address: user.address,
                             email: user.email,
+                            image: user.image,
                             exp: Math.floor(Date.now() / 1000) + 60 * (60 * 24)
                         },
                         process.env.JWT_SECRET

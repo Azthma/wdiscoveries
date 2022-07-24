@@ -2,10 +2,9 @@
     <div>
         <v-row class="d-flex justify-center py-16">
             <v-col cols="11" lg="7">
-                <v-img
-                    :src="`https://picsum.photos/500/300?image=10`"
-                    height="300"
-                ></v-img>
+                <v-img :src="require('../../assets/rice-terraces.jpg')" :height="!$device.mobile ? '300' : '200'" class="d-flex align-center">
+                    <div :class="!$device.mobile ? 'text-center text-h2 font-weight-bold' : 'text-center text-h3 font-weight-bold'" style="color:white;">Philippines</div>
+                </v-img>
                 <v-card flat color="transparent" class="mt-5">
                     <div class="text-body-1">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

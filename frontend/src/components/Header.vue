@@ -22,8 +22,8 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-            <a><div class="font-weight-bold text-body-1 px-5" style="color:white;">Portfolios</div></a>
-            <a><div class="font-weight-bold text-body-1 px-5" style="color:white;">Online Tools</div></a>
+            <a><div class="font-weight-bold text-body-1 px-5" style="color:white;" @click="portfolio">Portfolios</div></a>
+            <a><div class="font-weight-bold text-body-1 px-5" style="color:white;" @click="tools">Online Tools</div></a>
             <v-spacer></v-spacer>
             <v-text-field prepend-inner-icon="mdi-magnify" hide-details dense color="inherit" solo light placeholder="Search"></v-text-field>
             <v-divider vertical inset class="mx-5" style="border: 1px solid gray;"></v-divider>
@@ -117,10 +117,10 @@
                         </v-list-item>
                     </v-list-group>
                     <v-list-item>
-                        <v-list-item-title class="text-white">Portfolios</v-list-item-title>
+                        <v-list-item-title class="text-white" @click="portfolio">Portfolios</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                        <v-list-item-title class="text-white">Online Tools</v-list-item-title>
+                        <v-list-item-title class="text-white" @click="tools">Online Tools</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-card>
@@ -158,7 +158,10 @@ export default {
             this.login = !res;
         },
         logout() {
-            this.$cookies.remove("_token")
+            this.$cookies.remove("_token");
+            if (this.$route.path == '/portfolio/create') {
+                this.$router.push('/portfolio').catch(()=>{});
+            }
         },
         home() {
             if (this.$route.path != '/') {
@@ -170,7 +173,7 @@ export default {
                 this.$router.push('/philippines').catch(()=>{});
             }
             if (this.$device.mobile) {
-                this.drawer = false;                    
+                this.drawer = false;                   
             }
         },
         manga() {
@@ -182,6 +185,20 @@ export default {
         movies() {
             console.log("movies")
         },
+        portfolio() {
+            if (this.$route.path != '/portfolio') {
+                this.$router.push('/portfolio').catch(()=>{});
+            }
+            if (this.$device.mobile) {
+                this.drawer = false;                   
+            }
+        },
+        tools() {
+            console.log("tools");
+            if (this.$device.mobile) {
+                this.drawer = false;                   
+            }
+        }
     }
 };
 </script>

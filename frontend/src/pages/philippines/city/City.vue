@@ -4,6 +4,7 @@
             <v-col cols="11" lg="7">
                 <v-img
                     :src="getImage.image"
+                    :height="!$device.mobile ? '300' : '200'"
                     class="d-flex align-center"
                 >
                     <v-card flat color="transparent">
@@ -17,8 +18,8 @@
                     <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Places to visit in {{city.name}}</div>
                     <v-row class="d-flex justify-start">
                         <v-col
-                            v-for="(item, index) in destinations"
-                            :key="index"
+                            v-for="(item, idx) in destinations"
+                            :key="idx"
                             cols="12"
                             lg="4"
                         >
@@ -28,7 +29,7 @@
                             >
                                 <v-img
                                     height="250"
-                                    :src="`https://picsum.photos/500/300?image=${index * 5 + 10}`"
+                                    :src="item.image"
                                 ></v-img>
                                 <v-card-title>{{item.name}}</v-card-title>
                             </v-card>
@@ -44,8 +45,8 @@
                     <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Things to do in {{city.name}}</div>
                     <v-row class="d-flex justify-start">
                         <v-col
-                            v-for="(item, index) in activities"
-                            :key="index"
+                            v-for="(item, idx) in activities"
+                            :key="idx"
                             cols="12"
                             lg="4"
                         >
@@ -55,7 +56,7 @@
                             >
                                 <v-img
                                     height="250"
-                                    :src="`https://picsum.photos/500/300?image=${index * 5 + 10}`"
+                                    :src="`https://picsum.photos/500/300?image=${(idx - 1) * 5 + 10}`"
                                 ></v-img>
                                 <v-card-title>{{item.name}}</v-card-title>
                             </v-card>
@@ -64,33 +65,6 @@
                     <v-row>
                         <v-col class="d-flex justify-center">
                             <v-btn color="primary" @click="seeMoreActivities">See More</v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card>
-                <v-card flat color="transparent" class="mt-16">
-                    <div :class="!$device.mobile ? 'font-weight-bold text-h4 mb-3' : 'font-weight-bold text-h5 mb-3'">Delicacies in {{city.name}}</div>
-                    <v-row class="d-flex justify-start">
-                        <v-col
-                            v-for="(item, index) in delicacies"
-                            :key="index"
-                            cols="12"
-                            lg="4"
-                        >
-                            <v-card
-                                class="mx-auto"
-                                max-width="374"
-                            >
-                                <v-img
-                                    height="250"
-                                    :src="`https://picsum.photos/500/300?image=${index * 5 + 10}`"
-                                ></v-img>
-                                <v-card-title>{{item.name}}</v-card-title>
-                            </v-card>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col class="d-flex justify-center">
-                            <v-btn color="primary" @click="seeMoreDelicacies">See More</v-btn>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -157,32 +131,6 @@ export default {
                     name: 'River Tubing'
                 },
             ],
-            delicacies: [
-                {
-                    id: 1,
-                    name: 'Adobo'
-                },
-                {
-                    id: 2,
-                    name: 'Pancit Palabok'
-                },
-                {
-                    id: 3,
-                    name: 'Bulalo'
-                },
-                {
-                    id: 4,
-                    name: 'Arroz Caldo'
-                },
-                {
-                    id: 5,
-                    name: 'Kare-kare'
-                },
-                {
-                    id: 6,
-                    name: 'Empanada'
-                },
-            ],
             city: {},
         }
     },
@@ -192,7 +140,7 @@ export default {
                 ...this.city,
                 image: this.city.image && require(`../../../../../backend/resources/city/${this.city.image}`)
             }
-        }
+        },
     },
     mounted() {
         this.getCityData();
@@ -207,6 +155,9 @@ export default {
         async getDestinations() {
             const res = await this.getDestinationsByCity(this.$route.params.id);
             this.destinations = res.rows;
+            this.destinations.map((data) => {
+                data.image = require(`../../../../../backend/resources/destinations/${data.image}`)
+            })
         },
         seeMoreDestinations() {
             this.$router.push(`/philippines/${this.city.name}/destinations/${this.city.id}`).catch(()=>{});
@@ -214,9 +165,6 @@ export default {
         seeMoreActivities() {
             this.$router.push(`/philippines/${this.city.name}/things-to-do/${this.city.id}`).catch(()=>{});
         },
-        seeMoreDelicacies() {
-            this.$router.push(`/philippines/${this.city.name}/delicacies/${this.city.id}`).catch(()=>{});
-        }
     }
 }
 </script>

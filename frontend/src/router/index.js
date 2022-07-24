@@ -16,6 +16,10 @@ const CityDestinations = () => import("../pages/philippines/city/Destinations.vu
 const CityActivities = () => import("../pages/philippines/city/Activities.vue");
 const CityDelicacies = () => import("../pages/philippines/city/Delicacies.vue");
 
+//portfolio
+const Portfolio = () => import("../pages/portfolio/Portfolio.vue");
+const CreatePortfolio = () => import("../pages/portfolio/CreatePortfolio.vue");
+
 //admin
 const AdminDashboard = () => import("../pages/admin/AdminDashboard");
 
@@ -27,6 +31,7 @@ const routes = [
         name: "LandingPage",
         component: LandingPage
     },
+
     {
         path: "/philippines",
         name: "Philippines",
@@ -71,6 +76,17 @@ const routes = [
         path: "/philippines/:city/delicacies/:id",
         name: "CityDelicacies",
         component: CityDelicacies
+    },
+
+    {
+        path: "/portfolio",
+        name: "Portfolio",
+        component: Portfolio
+    },
+    {
+        path: "/portfolio/create",
+        name: "CreatePortfolio",
+        component: CreatePortfolio
     },
 
     {
