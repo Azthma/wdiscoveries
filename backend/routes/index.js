@@ -3,12 +3,13 @@ const city = require('../app/controllers/cityController');
 const destination = require('../app/controllers/destinationsController');
 const delicacy = require('../app/controllers/delicacyController');
 const activity = require('../app/controllers/activityController');
+const manga = require('../app/controllers/mangaController');
 var expressJwt = require('express-jwt');
 const cors = require('cors');
 const dotenv = require("dotenv");
 dotenv.config();
 const { userRegistrationRules } = require('../app/middleware/rules');
-const { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile } = require("../app/middleware/upload");
+const { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile, uploadMangaFile, uploadMangaListFile } = require("../app/middleware/upload");
 
 module.exports = function(app) {
 
@@ -39,6 +40,12 @@ module.exports = function(app) {
     // activity
     app.post('/activity', uploadActivityFile.single('file'), activity.addActivity);
     app.get('/activities', activity.getAllActivities);
+
+    // manga
+    app.post('/upload-manga-list-image', uploadMangaListFile.single('file'));
+    app.post('/manga', uploadMangaFile.single('file'), manga.addMangaPost);
+    app.get('/mangas', manga.getAllMangas);
+    app.get('/manga/:id', manga.getManga);
 
     app.use(
       expressJwt({

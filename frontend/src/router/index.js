@@ -16,6 +16,10 @@ const CityDestinations = () => import("../pages/philippines/city/Destinations.vu
 const CityActivities = () => import("../pages/philippines/city/Activities.vue");
 const CityDelicacies = () => import("../pages/philippines/city/Delicacies.vue");
 
+//manga
+const Manga = () => import("../pages/Manga.vue");
+const MangaData = () => import("../pages/MangaData.vue");
+
 //portfolio
 const Portfolio = () => import("../pages/portfolio/Portfolio.vue");
 const CreatePortfolio = () => import("../pages/portfolio/CreatePortfolio.vue");
@@ -76,6 +80,17 @@ const routes = [
         path: "/philippines/:city/delicacies/:id",
         name: "CityDelicacies",
         component: CityDelicacies
+    },
+
+    {
+        path: "/manga",
+        name: "Manga",
+        component: Manga
+    },
+    {
+        path: "/manga/:id",
+        name: "MangaData",
+        component: MangaData
     },
 
     {

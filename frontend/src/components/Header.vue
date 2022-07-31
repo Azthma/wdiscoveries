@@ -177,7 +177,12 @@ export default {
             }
         },
         manga() {
-            console.log("manga")
+            if (this.$route.path != '/manga') {
+                this.$router.push('/manga').catch(()=>{});
+            }
+            if (this.$device.mobile) {
+                this.drawer = false;                   
+            }
         },
         anime() {
             console.log("anime")

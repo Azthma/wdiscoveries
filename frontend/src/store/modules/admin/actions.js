@@ -108,6 +108,39 @@ const actions = {
 		  	return error;
 		}
 	},
+	//manga
+	async uploadMangaImage({}, payload) {
+		try {
+		  await this._vm.$serverApi.post('/upload-manga-list-image', payload);
+		} catch (error) {
+		  return error;
+		}
+	},
+	async addManga({}, payload) {
+		try {
+			const data = await this._vm.$serverApi.post('/manga', payload);
+			return data.data;
+		} catch (error) {
+		  	return error;
+		}
+	},
+	async getMangas({}, payload) {
+		try {
+			const page = payload && (payload.page || 1);
+			const search = payload && payload.search ? payload.search : "";
+			const pageSize = payload && payload.pageSize || 10;
+			const data = await this._vm.$serverApi.get('/mangas', {
+				params: {
+					page,
+					pageSize,
+					search,
+				},
+			});
+			return data.data;
+		} catch (error) {
+		  	return error;
+		}
+	},
 };
 
 export default actions;

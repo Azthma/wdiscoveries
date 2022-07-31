@@ -46,9 +46,29 @@ const activityStorage = multer.diskStorage({
   },
 });
 
+const mangaStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/resources/manga");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
+
+const mangaListStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/resources/manga/list");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
+
 const uploadCityFile = multer({ storage: cityStorage, fileFilter: imageFilter });
 const uploadDestinationFile = multer({ storage: destinationStorage, fileFilter: imageFilter });
 const uploadDelicacyFile = multer({ storage: delicacyStorage, fileFilter: imageFilter });
 const uploadActivityFile = multer({ storage: activityStorage, fileFilter: imageFilter });
+const uploadMangaFile = multer({ storage: mangaStorage, fileFilter: imageFilter });
+const uploadMangaListFile = multer({ storage: mangaListStorage, fileFilter: imageFilter });
 
-module.exports = { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile };
+module.exports = { uploadCityFile, uploadDestinationFile, uploadDelicacyFile, uploadActivityFile, uploadMangaFile, uploadMangaListFile };

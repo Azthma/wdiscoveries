@@ -2,7 +2,7 @@
     <div>
         <v-row class="d-flex justify-center mt-16">
             <v-col cols="11" lg="7">
-                <v-card dark class="py-16">
+                <v-card dark class="py-16" style="z-index: 1;">
                     <v-row class="d-flex align-center">
                         <v-col cols="12" lg="4">
                             <picture-input
@@ -15,7 +15,6 @@
                                     drag: 'Select a photo'
                                 }"
                                 :prefill="require(`../../../../backend/resources/user/${$auth.user.image}`)"
-                                style="z-index: -1;"
                                 class="pic-btn"
                                 @change="onChange"
                             ></picture-input>
